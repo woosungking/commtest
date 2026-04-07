@@ -1,0 +1,16 @@
+services:
+  neobe:
+    image: kingmusung/neobe:ver4
+    ports:
+      - "8080:8080"
+    environment:
+      - CORS_ALLOWED_ORIGINS=${COR_URL}
+
+  neofe:
+    image: kingmusung/neofe:ver3
+    ports:
+      - "82:80"
+    environment:
+      - API_BACKEND_URL=${API_BACKEND_URL:-http://neobe:8080}
+    depends_on:
+      - neobe

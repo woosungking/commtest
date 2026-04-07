@@ -1,0 +1,36 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - API_BACKEND_URL=${API_BACKEND_URL:-http://backend:8080}
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:mysql://db:3306/memodb}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-memo}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD:-memo}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-*}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=memodb
+      - MYSQL_USER=memo
+      - MYSQL_PASSWORD=memo
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
