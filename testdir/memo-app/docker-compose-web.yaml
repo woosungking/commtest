@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - API_BACKEND_URL=${API_BACKEND_URL:-http://backend:8080}
+    depends_on:
+      - backend
