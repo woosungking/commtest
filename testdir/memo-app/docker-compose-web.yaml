@@ -1,7 +1,6 @@
 services:
   frontend:
-    build:
-      context: ./frontend
+    image: kingmusung/neobe:ver4
     ports:
       - "80:80"
     environment:

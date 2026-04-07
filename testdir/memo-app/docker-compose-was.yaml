@@ -1,9 +1,12 @@
 services:
   backend:
+    image: kingmusung/neobe:ver4
     build:
       context: ./backend
     ports:
       - "8080:8080"
+    volumes:
+      - ./global-bundle.pem:/app/global-bundle.pem
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:mysql://db:3306/memodb}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-memo}
